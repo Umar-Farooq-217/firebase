@@ -8,8 +8,8 @@ export default function SignUpPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const signupHandler = async (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
+    const signupHandler = async () => {
+     
 
         try { 
             if (!email || !password || !userName) {
@@ -18,15 +18,15 @@ export default function SignUpPage() {
             }
 
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(userCredential.user);
+            console.log(userCredential);
         } catch (error) {
             console.error('Error occurred during signup:', error);
         }
-    }
+    };
     
     return (
         <div>
-            <form onSubmit={signupHandler}>
+            <form >
                 <input
                     className='border-red-500 px-10 border-2 my-5'
                     type="text"
@@ -48,7 +48,7 @@ export default function SignUpPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 /><br />
-                <button className='bg-blue-400 font-bold py-2 px-3 rounded-lg hover:text-white' type="submit">Sign Up</button>
+                <button onClick={signupHandler} className='bg-blue-400 font-bold py-2 px-3 rounded-lg hover:text-white'>Sign Up</button>
             </form>
         </div>
     );

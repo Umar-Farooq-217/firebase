@@ -31,7 +31,7 @@ export default function AddUser() {
             className='border-red-500 px-10 border-2 my-5'
             type="text"
             onChange={(e) => setUserName(e.target.value)}
-            placeholder='Enter Name'
+            placeholder='Enter Name' 
             required
         /><br />
         <input

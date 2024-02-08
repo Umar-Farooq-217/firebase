@@ -17,7 +17,7 @@ const options ={
       // Add logic here to look up the user from the credentials supplied
       const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
 
-      if (!user) {
+      if (user) {
         return user
       } else {
         return null

@@ -6,7 +6,7 @@ export default function SignUpPage() {
   
     
     return (
-      <div>
+      <div className='flex justify-center bg-blue-200'>
       <AddUser/>
       </div>
     );

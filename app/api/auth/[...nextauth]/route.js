@@ -1,9 +1,6 @@
 import NextAuth from "next-auth/next";
 
-import {auth} from '@/firebase/firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 const options ={
   secret :process.env.SECRET,
  
@@ -19,8 +16,7 @@ const options ={
     async authorize(credentials) {
       try {
         // Sign in with Firebase Authentication
-        const userCredential = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
-        const user = userCredential.user;
+        
         console.log(userCredential);
 
         // Return the user object if authentication is successful
@@ -35,10 +31,7 @@ const options ={
       }
     },
   }),
-  GoogleProvider({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET
-  })
+ 
 ]
 }
 const handler = NextAuth(options)

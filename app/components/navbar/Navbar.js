@@ -8,9 +8,9 @@ import { IoMdClose } from "react-icons/io";
 export default function Navbar() {
   let Links = [
     { name: 'Home', link: "/" },
-    { name: 'About', link: "/" },
-    { name: 'Contact', link: "/" },
-    { name: 'Blog', link: "/" },
+    { name: 'About', link: "/about" },
+    { name: 'Contact', link: "/contact" },
+    { name: 'Blog', link: "/blog" },
   ]
 
   const [open, setOpen] = useState(false);
@@ -21,14 +21,14 @@ export default function Navbar() {
 
   return (
     <div>
-      <nav className='md:flex justify-between items-center px-10 pt-4 lg:bg-slate-400 md:bg-red-300 sm:bg-green-200'>
-        <div className='flex justify-center items-center md:static sm:absolute sm:left-2 sm:top-3'>
+      <nav className='md:flex md:justify-between sm:block md:items-center md:px-10 pt-4 bg-green-400'>
+        <div className='flex justify-center items-center   sm:bg-green-400 md:w-auto sm:w-full'>
           <IoLogoCodepen className='color-blue-400 text-5xl pr-2 ' />
           <h1 className='text-xl font-bold'>Umar Farooq</h1>
         </div>
-        <ul className={`md:flex sm:pt-12 md:pt-0 text-xl font-bold ${open ? 'top-20 opacity-100' : 'top-[-100px] opacity-0'} md:opacity-100 sm:absolute md:relative transition-all duration-500 ease-in-out`}>
+        <ul className={`md:flex md:mt-0 sm:mt-16 md:pb-0 sm:pb-8 font-bold text-xl  ${open? 'block transition-all ease-in duration-500':'hidden'}`}>
           {Links.map((link) => (
-            <li className='hover:bg-black rounded-3xl sm:mt-5 md:mt-0  py-2 px-6 ml-3 hover:text-white sm:text-center' key={link.name}>
+            <li className='hover:bg-black rounded-3xl sm:mt-6 md:mt-0  py-2 px-6  text-center hover:text-white sm:text-center' key={link.name}>
               <Link href={link.link}>{link.name}</Link>
             </li>
           ))}

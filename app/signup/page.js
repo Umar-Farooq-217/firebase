@@ -1,26 +1,37 @@
 'use client'
 import { db } from "@/firebase/firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "@/firebase/firebase";
 import React, { useState } from "react";
 
 export default function SignUpPage() {
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('')
 
-  const submitHandler = async()=>{
-    let user = {
-      email,
-      password
-    }
-try {
-  const collectionName = collection(db,'students')
-  await addDoc(collectionName,user)
-  console.log('ADD users',user);
-} catch (error) {
-  console.log(error);
-}
+  const submitHandler = async (e) => {
+    e.preventDefault(); // Prevents the default form submission behavior
 
-  }
+    try {
+      // Create a new user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("User created:", user);
+
+      // Optionally, store additional user data in Firestore
+      // Adjust the path and data structure as needed
+      await addDoc(collection(db, "users"), {
+        uid: user.uid, // Store the user's ID for future reference
+        email: user.email,
+      });
+      alert('sucees')
+
+      // Redirect the user or show a success message
+    } catch (error) {
+      console.error("Error signing up:", error.message);
+      // Handle errors (e.g., show an error message)
+    }
+  };
 
   return (
     <div className=''>

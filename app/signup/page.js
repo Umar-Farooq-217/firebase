@@ -18,15 +18,12 @@ export default function SignUpPage() {
       const user = userCredential.user;
       console.log("User created:", user);
 
-      // Optionally, store additional user data in Firestore
-      // Adjust the path and data structure as needed
       await addDoc(collection(db, "users"), {
-        uid: user.uid, // Store the user's ID for future reference
+        uid: user.uid, 
         email: user.email,
       });
       alert('sucees')
 
-      // Redirect the user or show a success message
     } catch (error) {
       console.error("Error signing up:", error.message);
       // Handle errors (e.g., show an error message)

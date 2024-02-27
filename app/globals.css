@@ -2,3 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
+
+.good {
+    background-color: brown;
+}
+
+.good:hover {
+    animation: btn 5s infinite ;
+    background-color: rgb(16, 236, 134); 
+}
+
+@keyframes btn {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: green;
+    }
+    50% {
+        background-color: rgb(236, 16, 152);
+    }
+    100% {
+        background-color: rgb(81, 27, 209);
+    }
+} */
+
+.good {
+    background: linear-gradient(230deg, red 50%, blue);
+    transition: background-position 0.5s ease;
+}
+
+.good:hover {
+    background-position: right; /* Swap the positions of the gradient stops */
+}
+

@@ -2,12 +2,16 @@ import React from 'react'
 
 import Image from "next/image";
 import Navbar from './components/navbar/Navbar';
+import './globals.css'
 
 export default function Home() {
   return (
  <div>
  
  <Navbar/>
+ <div>
+  <button className='good'>Good</button>
+ </div>
  
  <div className='bg-pink-300 sm:pt-12  grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5'>
 

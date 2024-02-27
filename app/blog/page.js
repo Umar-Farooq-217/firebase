@@ -103,6 +103,7 @@ export default function page() {
                                            <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/blog-I-svg1.svg" alt="arrow"/>
                                         </a>
                                     </div>
+                                    
                                 </div>
                                 <img src="https://i.ibb.co/gDdnJb5/img-6.png" className="w-full" alt="wall design" />
                             </div>

@@ -1,4 +1,6 @@
 'use client'
+import { db } from '@/firebase/firebase';
+import { addDoc, collection } from 'firebase/firestore';
 import React, { useState } from 'react'
 
 
@@ -7,17 +9,34 @@ export default function page() {
   const [password, setPassword] = useState('')
   const [students, setStudents] = useState([]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async(e) => {
     e.preventDefault();
+    if (!name || !password) {
+      alert('Please fill in all fields');
+      return;
+    }
+  
 
     const user = {
       name,
       password,
     };
+   
     setStudents([...students, user]);
     setName('');
     setPassword('');
-    console.log(students);
+
+    try {
+     
+      const collectionName = collection(db,'students')
+await addDoc(collectionName,user)
+alert('success')
+
+      
+    } catch (error) {
+      console.log('error',error);
+    }
+    
   }
 
   const deleteHandler = (password) => {
@@ -26,10 +45,37 @@ export default function page() {
     setName('');
     setPassword('');
   }
-  const updateHandler = (studentPassword) => {
-    const newName = prompt('Enter the new name:');
-    const newPassword = prompt('Enter the new Password:');
+
+
+  const updateDocument = async (studentPassword, newName, newPassword) => {
+    try {
+      const studentRef = doc(db, 'students', studentPassword);
+      await updateDoc(studentRef, {
+        name: newName,
+        password: newPassword
+      });
+      alert('Document updated successfully');
+    } catch (error) {
+      console.error('Error updating document: ', error);
+      alert('Failed to update document');
+    }
+  };
+
+
+
+  const updateHandler = async(studentPassword) => {
+    const studentToUpdate = students.find(student => student.password === studentPassword);
+    
+    if (!studentToUpdate) {
+      alert('Student not found');
+      return;
+    }
+  
+    const newName = prompt('Enter the new name:', studentToUpdate.name);
+    const newPassword = prompt('Enter the new Password:', studentToUpdate.password);
+  
     if (newName !== null && newPassword !== null) { 
+      await updateDocument(studentPassword,newName,newPassword)
       const updatedStudents = students.map((student) => {
         if (student.password === studentPassword) {
           return {
@@ -43,7 +89,7 @@ export default function page() {
       setStudents(updatedStudents);
     }
   };
-
+  
   return (
     <div>
       <div className="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">

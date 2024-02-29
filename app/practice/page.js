@@ -28,12 +28,14 @@ export default function page() {
   }
   const updateHandler = (studentPassword) => {
     const newName = prompt('Enter the new name:');
-    if (newName !== null) { 
+    const newPassword = prompt('Enter the new Password:');
+    if (newName !== null && newPassword !== null) { 
       const updatedStudents = students.map((student) => {
         if (student.password === studentPassword) {
           return {
             ...student,
-            name: newName
+            name: newName,
+            password: newPassword
           };
         }
         return student;
@@ -41,7 +43,6 @@ export default function page() {
       setStudents(updatedStudents);
     }
   };
-  
 
   return (
     <div>
@@ -77,7 +78,7 @@ export default function page() {
                 <p>Name: {student.name}</p>
                 <p>Password: {student.password}</p>
                 <button className='bg-red-500 py-2 px-3 rounded-xl' onClick={() => deleteHandler(student.password)}>Delete</button>
-                <button className='bg-green-500 py-2 px-3 rounded-xl' onClick={() => updateHandler(student.password, prompt('Update Tast:', task.text))} >Update</button>
+                <button className='bg-green-500 py-2 px-3 rounded-xl' onClick={() => updateHandler(student.password)} >Update</button>
 
               </div>
             ))}

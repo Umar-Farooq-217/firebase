@@ -46,24 +46,7 @@ alert('success')
     setPassword('');
   }
 
-
-  const updateDocument = async (studentPassword, newName, newPassword) => {
-    try {
-      const studentRef = doc(db, 'students', studentPassword);
-      await updateDoc(studentRef, {
-        name: newName,
-        password: newPassword
-      });
-      alert('Document updated successfully');
-    } catch (error) {
-      console.error('Error updating document: ', error);
-      alert('Failed to update document');
-    }
-  };
-
-
-
-  const updateHandler = async(studentPassword) => {
+  const updateHandler = async (studentPassword) => {
     const studentToUpdate = students.find(student => student.password === studentPassword);
     
     if (!studentToUpdate) {
@@ -75,18 +58,23 @@ alert('success')
     const newPassword = prompt('Enter the new Password:', studentToUpdate.password);
   
     if (newName !== null && newPassword !== null) { 
-      await updateDocument(studentPassword,newName,newPassword)
-      const updatedStudents = students.map((student) => {
-        if (student.password === studentPassword) {
-          return {
-            ...student,
-            name: newName,
-            password: newPassword
-          };
-        }
-        return student;
-      });
-      setStudents(updatedStudents);
+      try {
+        await updateDocument(studentPassword, newName, newPassword);
+        const updatedStudents = students.map((student) => {
+          if (student.password === studentPassword) {
+            return {
+              ...student,
+              name: newName,
+              password: newPassword
+            };
+          }
+          return student;
+        });
+        setStudents(updatedStudents);
+      } catch (error) {
+        console.error('Error updating document: ', error);
+        alert('Failed to update document');
+      }
     }
   };
   

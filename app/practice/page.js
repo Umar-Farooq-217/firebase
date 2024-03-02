@@ -1,7 +1,7 @@
 'use client'
 import { db } from '@/firebase/firebase';
-import { addDoc, collection } from 'firebase/firestore';
-import React, { useState } from 'react'
+import { addDoc, collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react'
 
 
 export default function page() {
@@ -9,34 +9,34 @@ export default function page() {
   const [password, setPassword] = useState('')
   const [students, setStudents] = useState([]);
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (!name || !password) {
       alert('Please fill in all fields');
       return;
     }
-  
+
 
     const user = {
       name,
       password,
     };
-   
+
     setStudents([...students, user]);
     setName('');
     setPassword('');
 
     try {
-     
-      const collectionName = collection(db,'students')
-await addDoc(collectionName,user)
-alert('success')
 
-      
+      const collectionName = collection(db, 'students')
+      await addDoc(collectionName, user)
+      alert('success')
+
+
     } catch (error) {
-      console.log('error',error);
+      console.log('error', error);
     }
-    
+
   }
 
   const deleteHandler = (password) => {
@@ -48,16 +48,16 @@ alert('success')
 
   const updateHandler = async (studentPassword) => {
     const studentToUpdate = students.find(student => student.password === studentPassword);
-    
+
     if (!studentToUpdate) {
       alert('Student not found');
       return;
     }
-  
+
     const newName = prompt('Enter the new name:', studentToUpdate.name);
     const newPassword = prompt('Enter the new Password:', studentToUpdate.password);
-  
-    if (newName !== null && newPassword !== null) { 
+
+    if (newName !== null && newPassword !== null) {
       try {
         await updateDocument(studentPassword, newName, newPassword);
         const updatedStudents = students.map((student) => {
@@ -77,7 +77,32 @@ alert('success')
       }
     }
   };
-  
+
+  const fetchDocs = async () => {
+    try {
+      const collectionName = collection(db, 'students');
+      const docs = getDocs(collectionName);
+      const studentData = [];
+      docs.forEach((doc) => {
+        studentData.push({
+          id: doc.id,
+          ...doc.data()
+        })
+        setStudents(studentData);
+        console.log("students", students);
+
+      });
+
+    } catch (error) {
+      console.log('error');
+    }
+  }
+
+  useEffect(() => {
+
+    fetchDocs()
+  }, []);
+
   return (
     <div>
       <div className="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">

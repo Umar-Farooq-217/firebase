@@ -98,10 +98,6 @@ export default function page() {
     }
   }
 
-  useEffect(() => {
-
-    fetchDocs()
-  }, []);
 
   return (
     <div>
@@ -129,10 +125,13 @@ export default function page() {
 
           </form>
 
-          <h1 className='bg-green-600 text-3xl text-center'>Users</h1>
+          <button className='bg-green-600 text-3xl text-center' onClick={fetchDocs}>Users</button>
 
           <div>
-            {students.map((student, index) => (
+            { 
+            fetchDocs &&
+
+            students.map((student, index) => (
               <div key={index} className="bg-gray-100 p-2 my-2">
                 <p>Name: {student.name}</p>
                 <p>Password: {student.password}</p>

@@ -125,11 +125,11 @@ export default function page() {
 
           </form>
 
-          <button className='bg-green-600 text-3xl text-center' onClick={fetchDocs}>Users</button>
+          <button className='bg-green-600 text-3xl text-center' >Users</button>
 
           <div>
             { 
-            fetchDocs &&
+            
 
             students.map((student, index) => (
               <div key={index} className="bg-gray-100 p-2 my-2">

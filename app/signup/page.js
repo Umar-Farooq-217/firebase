@@ -1,34 +1,11 @@
 'use client'
-import { db } from "@/firebase/firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "@/firebase/firebase";
+
 import React, { useState } from "react";
 
 export default function SignUpPage() {
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('')
 
-  const submitHandler = async (e) => {
-    e.preventDefault(); // Prevents the default form submission behavior
-
-    try {
-      // Create a new user with email and password
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("User created:", user);
-
-      await addDoc(collection(db, "users"), {
-        uid: user.uid, 
-        email: user.email,
-      });
-      alert('sucees')
-
-    } catch (error) {
-      console.error("Error signing up:", error.message);
-      // Handle errors (e.g., show an error message)
-    }
-  };
 
   return (
     <div className=''>
@@ -57,7 +34,7 @@ export default function SignUpPage() {
                   
                   
                 </div>
-                <button type="submit" onClick={submitHandler} className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                <button type="submit"  className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
                 
                 
               </form>

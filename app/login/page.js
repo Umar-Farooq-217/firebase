@@ -1,8 +1,5 @@
 'use client'
 import { useState } from 'react';
-import { auth } from '../../firebase/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-
 
 
 
@@ -12,25 +9,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
-
-  const loginHandler = async () => {
-    e.preventDefault(); 
-    let user = {
-      email,
-      password
-    }
-    try {
-      const credentialUser = await signInWithEmailAndPassword(auth, email, password)
-      console.log("user sign in as ", credentialUser);
-      setEmail("")
-      setPassword("")
-      alert('success')
-
-    } catch (error) {
-      console.log("Error", error);
-      alert('OOPs')
-    }
-  }
 
 
   return (
@@ -58,7 +36,7 @@ export default function Login() {
 
 
 
-                <button type="submit" onClick={loginHandler} className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                <button type="submit"  className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
 
 
               </form>

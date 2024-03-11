@@ -41,3 +41,11 @@
     background-position: right; /* Swap the positions of the gradient stops */
 }
 
+.btn{
+    transition: transform 900ms;
+}
+
+.btn:hover,
+.btn:focus-visible{
+    transform: translateY(-0.75rem);
+}

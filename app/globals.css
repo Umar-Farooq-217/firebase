@@ -38,14 +38,66 @@
 }
 
 .good:hover {
-    background-position: right; /* Swap the positions of the gradient stops */
+    background-position: right;
+    /* Swap the positions of the gradient stops */
 }
 
-.btn{
+.btn {
     transition: transform 900ms;
 }
 
 .btn:hover,
-.btn:focus-visible{
+.btn:focus-visible {
     transform: translateY(-0.75rem);
+    animation: changeColor 2s infinite;
+}
+
+
+@keyframes changeColor {
+    0% {
+        background-color: red;
+        color: white;
+    }
+
+    20% {
+        background-color: rgb(47, 14, 192);
+        color: rgb(218, 14, 14);
+    }
+
+    40% {
+        background-color: rgb(15, 206, 126);
+        color: rgb(91, 13, 218);
+    }
+
+    60% {
+        background-color: rgb(202, 12, 155);
+        color: rgb(35, 207, 12);
+    }
+
+    100% {
+        background-color: rgb(200, 243, 9);
+        color: rgb(211, 11, 144);
+    }
+}
+/* 
+.hover\:bg-animation:hover {
+    animation: changeColor 2s infinite;
+} */
+
+.anima:hover{
+    animation: changeColor 2s infinite;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.rotation:hover{
+    transition: rotateAnimation 2s linear infinite ;
 }

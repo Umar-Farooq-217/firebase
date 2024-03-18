@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import '../../app/globals.css'
 import Image from 'next/image'
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 
 
@@ -37,7 +37,8 @@ alert('success')
   }
 
   const fetchDate = ()=>{
-    console.log('nice');
+    const data = getDoc(db,'users')
+    console.log('data',data);
   }
 
 
@@ -74,7 +75,7 @@ alert('success')
       <Image width={100} height={100} src='/flower.avif' className='bg-white flex m-auto rotation' />
 
       <div className="flex m-auto">
-        <button onClick={fetchDate} className="px-7 py-2 text-white font-bold colors flex m-auto mt-7">Colors</button>
+        <button onClick={fetchDate} className="px-7 py-2 text-white font-bold colors flex m-auto mt-7">Get Students</button>
       </div>
       <div className="w-10 h-10 square border"></div>
     </div>

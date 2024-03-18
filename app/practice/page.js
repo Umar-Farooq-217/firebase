@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import '../../app/globals.css'
 import Image from 'next/image'
-import { addDoc, collection, getDoc } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 
 
@@ -36,12 +36,31 @@ alert('success')
 
   }
 
-  const fetchDate = ()=>{
-    const data = getDoc(db,'users')
-    console.log('data',data);
-  }
-
-
+  const fetchDate = async () => {
+    try {
+      const getStudents = collection(db, 'students');
+      const querySnapshot = await getDocs(getStudents);
+      const studentsData = [];
+  
+      querySnapshot.forEach((doc) => {
+        studentsData.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+  
+      setStudents(studentsData);
+      console.log('studentsData', studentsData);
+  
+      // Show alert when data is fetched successfully
+      alert('Data fetched successfully!');
+      
+    } catch (error) {
+      console.log('error', error);
+      alert('Data is not fetched successfully!');
+    }
+  };
+  
 
 
   return (
@@ -72,12 +91,35 @@ alert('success')
       <button className="ml-10 bg-red-600 text-xl p-3 anima">Users</button>
 
 
-      <Image width={100} height={100} src='/flower.avif' className='bg-white flex m-auto rotation' />
+      <Image width={100} height={100} src='/flower.avif' className='bg-white flex m-auto rotation' alt='pic' />
 
       <div className="flex m-auto">
         <button onClick={fetchDate} className="px-7 py-2 text-white font-bold colors flex m-auto mt-7">Get Students</button>
       </div>
       <div className="w-10 h-10 square border"></div>
+
+
+<div>
+  {
+    students.map((student)=>{
+      return(
+        <div className='grid lg:grid-cols-4 bg-green-400'>
+
+        <span>{student.name}</span>
+        <span>{student.email}</span>
+        <button className='bg-yellow-400 text-white font-bold my-3 hover:bg-yellow-200'>Update</button>
+        </div>
+      )
+    })
+  }
+</div>
+
+
+
+
+
+
+
     </div>
   );
 }

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import '../../app/globals.css'
 import Image from 'next/image'
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 
 
@@ -60,8 +60,17 @@ alert('success')
       alert('Data is not fetched successfully!');
     }
   };
+  const deleteHandler = async (id, email) => {
+    const docRef = doc(db, 'students', id);
+    try {
+      await deleteDoc(docRef);
+      const newStudents = students.filter((student) => student.id !== id);
+      setStudents(newStudents);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
   
-
 
   return (
     <div>
@@ -103,11 +112,12 @@ alert('success')
   {
     students.map((student)=>{
       return(
-        <div className='grid lg:grid-cols-4 bg-green-400'>
+        <div key={student.id} className='grid lg:grid-cols-4 bg-green-400'>
 
         <span>{student.name}</span>
         <span>{student.email}</span>
         <button className='bg-yellow-400 text-white font-bold my-3 hover:bg-yellow-200'>Update</button>
+        <button className='bg-red-400 text-white font-bold my-3 hover:bg-red-200' onClick={()=>deleteHandler(student.id)}>Delete</button>
         </div>
       )
     })

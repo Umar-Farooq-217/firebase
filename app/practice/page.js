@@ -118,7 +118,7 @@ alert('success')
         <span>{student.email}</span>
         <button className='bg-yellow-400 text-white font-bold my-3 hover:bg-yellow-200'>Update</button>
         <button className='bg-red-400 text-white font-bold my-3 hover:bg-red-200' onClick={()=>deleteHandler(student.id)}>Delete</button>
-        <div></div>
+        
         </div>
       )
     })

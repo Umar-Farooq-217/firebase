@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import '../../app/globals.css'
 import Image from 'next/image'
-import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 
 
@@ -10,9 +10,10 @@ export default function page() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [students, setStudents] = useState([])
+  const [currentStudent, setCurrentStudent] = useState({ id: '', name: '', email: '' });
 
-  const addData = async ()=>{
-    if(!name || !email){
+  const addData = async () => {
+    if (!name || !email) {
 
       alert('add all fields')
       return
@@ -22,16 +23,16 @@ export default function page() {
       name
     }
     try {
-      const collectionName = collection(db,'students');
-      await addDoc(collectionName,user)
-      setStudents([...students,user])
+      const collectionName = collection(db, 'students');
+      await addDoc(collectionName, user)
+      setStudents([...students, user])
       setEmail('')
       setName('')
-alert('success')
+      alert('success')
 
-} catch (error) {
-  console.log('error',error);
-  alert('sorry')
+    } catch (error) {
+      console.log('error', error);
+      alert('sorry')
     }
 
   }
@@ -41,20 +42,20 @@ alert('success')
       const getStudents = collection(db, 'students');
       const querySnapshot = await getDocs(getStudents);
       const studentsData = [];
-  
+
       querySnapshot.forEach((doc) => {
         studentsData.push({
           id: doc.id,
           ...doc.data()
         });
       });
-  
+
       setStudents(studentsData);
       console.log('studentsData', studentsData);
-  
+
       // Show alert when data is fetched successfully
       alert('Data fetched successfully!');
-      
+
     } catch (error) {
       console.log('error', error);
       alert('Data is not fetched successfully!');
@@ -71,10 +72,26 @@ alert('success')
     }
   };
 
-  const updateHandler = (email)=>{
-    
-  }
-  
+  const updateHandler = async () => {
+    const { id, name: updatedName, email: updatedEmail } = currentStudent;
+    const docRef = doc(db, 'students', id);
+    try {
+      await updateDoc(docRef, {
+        name: updatedName,
+        email: updatedEmail,
+      });
+      fetchDate();
+      setCurrentStudent({ id: '', name: '', email: '' }); // Reset current student after updating
+      alert('Student updated successfully!');
+    } catch (error) {
+      console.log('error', error);
+      alert('Failed to update student');
+    }
+  };
+  const setCurrentStudentForEdit = (id, name, email) => {
+    setCurrentStudent({ id, name, email });
+  };
+
 
   return (
     <div>
@@ -112,22 +129,30 @@ alert('success')
       <div className="w-10 h-10 square border"></div>
 
 
-<div>
-  {
-    students.map((student)=>{
-      return(
-        <div key={student.id} className='grid lg:grid-cols-4 bg-green-400'>
+      <div>
+        {
+          students.map((student) => {
+            return (
+              <div key={student.id} className='grid lg:grid-cols-4 bg-green-400'>
 
-        <span>{student.name}</span>
-        <span>{student.email}</span>
-        <button onClick={()=>updateHandler(student.email)} className='bg-yellow-400 mx-2 text-white font-bold my-3 hover:bg-yellow-200'>Update</button>
-        <button className='bg-red-400 text-white font-bold my-3 mx-3 hover:bg-red-200' onClick={()=>deleteHandler(student.id)}>Delete</button>
-        
-        </div>
-      )
-    })
-  }
-</div>
+                <span>{student.name}</span>
+                <span>{student.email}</span>
+                <button onClick={() => setCurrentStudentForEdit(student.id, student.name, student.email)} className='bg-yellow-400 mx-2 text-white font-bold my-3 hover:bg-yellow-200'>Edit</button>
+                <button className='bg-red-400 text-white font-bold my-3 mx-3 hover:bg-red-200' onClick={() => deleteHandler(student.id)}>Delete</button>
+
+              </div>
+            )
+          })
+        }
+
+        {currentStudent.id && (
+          <div>
+            <input type="text" value={currentStudent.name} onChange={e => setCurrentStudent({ ...currentStudent, name: e.target.value })} />
+            <input type="text" value={currentStudent.email} onChange={e => setCurrentStudent({ ...currentStudent, email: e.target.value })} />
+            <button onClick={updateHandler}>Update</button>
+          </div>
+        )}
+      </div>
 
 
 

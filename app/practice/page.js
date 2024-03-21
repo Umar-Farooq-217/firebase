@@ -70,6 +70,10 @@ alert('success')
       console.log('error', error);
     }
   };
+
+  const updateHandler = (email)=>{
+    
+  }
   
 
   return (
@@ -116,8 +120,8 @@ alert('success')
 
         <span>{student.name}</span>
         <span>{student.email}</span>
-        <button className='bg-yellow-400 text-white font-bold my-3 hover:bg-yellow-200'>Update</button>
-        <button className='bg-red-400 text-white font-bold my-3 hover:bg-red-200' onClick={()=>deleteHandler(student.id)}>Delete</button>
+        <button onClick={()=>updateHandler(student.email)} className='bg-yellow-400 mx-2 text-white font-bold my-3 hover:bg-yellow-200'>Update</button>
+        <button className='bg-red-400 text-white font-bold my-3 mx-3 hover:bg-red-200' onClick={()=>deleteHandler(student.id)}>Delete</button>
         
         </div>
       )

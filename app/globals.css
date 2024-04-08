@@ -114,7 +114,7 @@
 .square{
     width: 120px;
     height: 120px;
-    background-image: conic-gradient(rgb(233, 233, 10),rgb(13, 223, 13),rgb(199, 16, 199),red,blue,gray,orange); 
+    background-image: conic-gradient(rgb(233, 233, 10),rgb(75, 233, 75),rgb(129, 10, 129),rgb(209, 74, 74),blue,gray,orange); 
     cursor: pointer;
     border-radius: 20px;
     animation: conicAnimation 0.2s linear infinite;

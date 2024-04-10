@@ -12,6 +12,9 @@ const firebaseConfig = {
     appId: "1:895699538051:web:1aa6b7db0f5fdc1bc34bb6"
 };
 
+
+mongooseUrl = 'mongodb+srv://practiceForCrudOperations:umar12345@cluster0.htusca8.mongodb.net/'
+
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
